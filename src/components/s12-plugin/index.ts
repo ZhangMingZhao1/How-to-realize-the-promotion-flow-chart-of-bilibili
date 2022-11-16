@@ -1,4 +1,5 @@
 import TeamNode from './team-node';
+import TBDNode from './TBD-node';
 import betterLine from './better-line';
 import type { LogicFlow } from '@logicflow/core';
 import debounce from 'lodash.debounce';
@@ -9,6 +10,7 @@ class S12Plugin {
   constructor({ lf }) {
     this.lf = lf;
     this.lf.register(TeamNode);
+    this.lf.register(TBDNode);
     this.lf.register(betterLine);
     // this.lf.on('node:dnd-drag', debounce(this.checkAppendBoundaryEvent, 10));
     // this.lf.on('node:dnd-add', this.appendBoundaryEvent);

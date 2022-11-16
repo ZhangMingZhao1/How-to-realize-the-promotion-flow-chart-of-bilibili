@@ -8,9 +8,9 @@ class TeamNodeModel extends RectNodeModel {
    */
   initNodeData(data) {
     super.initNodeData(data)
-    this.width = 268;
-    this.height = 44;
-    // this.radius = 3;
+    this.width = 100;
+    this.height = 30;
+    this.radius = 3;
     // this.text.editable = false;
     this.text.x = this.x + 10;
     this.text.y = this.y + 1;
@@ -28,14 +28,9 @@ class TeamNodeModel extends RectNodeModel {
   getNodeStyle() {
     const style = super.getNodeStyle();
     const dataStyle = this.properties.style || {};
-    const { isCloseToBoundary, region, isHide } = this.properties;
+    const { isCloseToBoundary, region } = this.properties;
     let fill = this.defaultFill
     let stroke = '#EAEAEC'
-    console.log('region',region)
-    if (isHide==='true') {
-      console.log('ddddd')
-      style.display = 'none'
-    }
     switch (region) {
       case 'LPL':
         fill = 'rgb(248, 206, 204)'
@@ -76,18 +71,16 @@ class TeamNodeModel extends RectNodeModel {
       style.strokeWidth = Number(dataStyle.borderWidth) || 1;
       style.stroke = stroke;
     }
+    style.class = "ddddd"
     style.fill = fill;
+    // style.style = "transition: width 2s"
     return style;
   }
-  /**
-   * 宽高判断
-   */
   setAttributes() {
-    const region = this.properties.region;
-    // 如果是边缘左边节点
-    if (region) {
-      this.width = 100
-      this.height = 30
+    const { isHide } = this.properties;
+    console.log('isHide', isHide)
+    if (isHide === true || isHide === false) {
+      this.visible = !isHide;
     }
   }
   getBackgroundFill(region) {
@@ -100,44 +93,50 @@ class TeamNodeModel extends RectNodeModel {
   setIsCloseToBoundary (flag) {
     this.setProperty('isCloseToBoundary', flag)
   }
-  // getAnchorStyle (anchorInfo) {
-  //   const style = super.getAnchorStyle(anchorInfo);
-  //   style.fill = 'transparent';
-  //   style.stroke = 'transparent';
-  //   style.hover.fill = 'transparent';
-  //   style.hover.stroke = 'transparent';
-  //   return style;
-  // }
+  getAnchorStyle (anchorInfo) {
+    const style = super.getAnchorStyle(anchorInfo);
+    style.fill = 'transparent';
+    style.stroke = 'transparent';
+    style.hover.fill = 'transparent';
+    style.hover.stroke = 'transparent';
+    return style;
+  }
   /**
    * 重写定义锚点
    */
   getDefaultAnchor() {
-    const { x, y, id, width, height } = this;
+    const { x, y, id, width } = this;
     const anchors = [
       {
         x: x + width / 2,
-        y: y + height / 2,
+        y: y,
         id: `${id}_right`,
         type: "right"
       },
+      {
+        x: x - width / 2,
+        y: y,
+        id: `${id}_left`,
+        type: "left"
+      }
     ];
     return anchors;
   }
-  // getOutlineStyle() {
-  //   const style = super.getOutlineStyle();
-  //   style.stroke = 'transparent';
-  //   style.hover.stroke = 'transparent';
-  //   return style;
-  // }
+  getOutlineStyle() {
+    const style = super.getOutlineStyle();
+    style.stroke = 'transparent';
+    style.hover.stroke = 'transparent';
+    return style;
+  }
 }
 class TeamNode extends RectNode {
-  paintIcon () {
+  getIcon () {
     const { width, height, text } = this.props.model;
     return h('image', {
-      width: 35,
-      height: 35,
-      x: - width / 2 + 3,
-      y: - height / 2 + 3,
+      width: 30,
+      height: 30,
+      x: - width / 2,
+      y: - height / 2,
       href: getIcon(text.value)
     });
   }
@@ -154,7 +153,6 @@ class TeamNode extends RectNode {
       height,
       radius
     } = this.props.model;
-    console.log('xxx', x, y, width, height)
     const style = this.props.model.getNodeStyle()
     return h(
       'g',
@@ -177,32 +175,21 @@ class TeamNode extends RectNode {
           transform: `translate(${x}, ${y})`
         }, [
           h('rect', {
-            x: width/2-26 ,
-            y:  -22,
-            width: 26,
-            height: 44,
+            x: - width / 2,
+            y: - height / 2,
+            width: 30,
+            height: 30,
             fill: '#000',
-            fillOpacity: 0.1,
+            fillOpacity: 0.05,
             stroke: 'none',
-            style: "font-size: 18px;color: var(--text3);font-family: Helvetica, Arial, sans-serif;",
-            // text: {
-            //   x: width / 2 - 18,
-            //   y: 5,
-            //   value: '3'
-            // }
           }),
-          // h('text', {
-          //   x: width/2-18 ,
-          //   y: 5,
-          //   style: "font-size: 18px;color: var(--text3);font-family: Helvetica, Arial, sans-serif;"
-          // },['3']),
-          this.paintIcon(),
-          // h('path', {
-          //   d: `M ${30 - width / 2} ${1 -height / 2 } l 0 28`,
-          //   stroke: '#000',
-          //   strokeOpacity: 0.1,
-          //   strokeWidth: 1
-          // })
+          this.getIcon(),
+          h('path', {
+            d: `M ${30 - width / 2} ${1 -height / 2 } l 0 28`,
+            stroke: '#000',
+            strokeOpacity: 0.1,
+            strokeWidth: 1
+          })
         ])
       ]
     )

@@ -2,7 +2,7 @@ import { RectNode, RectNodeModel, h } from "@logicflow/core"
 import { getIcon } from "./icon";
 
 
-class TeamNodeModel extends RectNodeModel {
+class TBDNodeModel extends RectNodeModel {
   /**
    * 初始化
    */
@@ -27,56 +27,14 @@ class TeamNodeModel extends RectNodeModel {
    */
   getNodeStyle() {
     const style = super.getNodeStyle();
-    const dataStyle = this.properties.style || {};
-    const { isCloseToBoundary, region, isHide } = this.properties;
-    let fill = this.defaultFill
-    let stroke = '#EAEAEC'
-    console.log('region',region)
-    if (isHide==='true') {
-      console.log('ddddd')
-      style.display = 'none'
-    }
-    switch (region) {
-      case 'LPL':
-        fill = 'rgb(248, 206, 204)'
-        stroke = 'rgb(184, 84, 80)'
-        break
-      case 'LCK':
-        fill = 'rgb(255, 230, 204)'
-        stroke = 'rgb(215, 155, 0)'
-        break
-      case 'LEC':
-        fill = 'rgb(218, 232, 252)'
-        stroke = 'rgb(108, 142, 191)'
-        break
-      case 'LCS':
-        fill = 'rgb(213, 232, 212)'
-        stroke = 'rgb(130, 179, 102)'
-        break
-      case 'CBLOL':
-        fill = 'rgb(225, 213, 231)'
-        stroke = 'rgb(150, 115, 166)'
-        break
-      case 'PCS':
-        fill = 'rgb(177, 221, 240)'
-        stroke = 'rgb(16, 115, 158)'
-        break
-      case 'LCO':
-      case 'VCS':
-      case 'LLA':
-      case 'LJL':
-      case 'TCL':
-        fill = 'rgb(186, 200, 211)'
-        stroke = 'rgb(35, 68, 93)'
-    }
-    if (isCloseToBoundary) {
-      style.strokeWidth = Number(dataStyle.borderWidth) || 2;
-      style.stroke = dataStyle.borderColor || '#ff7f0e';
+    const { result } = this.properties;
+    if (result === 'win') {
+      style.fill = "#0094ff"
     } else {
-      style.strokeWidth = Number(dataStyle.borderWidth) || 1;
-      style.stroke = stroke;
+      style.fill = "#f1f2f3"
     }
-    style.fill = fill;
+    style.stroke = '#EAEAEC'
+    style.strokeWidth = 1;
     return style;
   }
   /**
@@ -100,14 +58,14 @@ class TeamNodeModel extends RectNodeModel {
   setIsCloseToBoundary (flag) {
     this.setProperty('isCloseToBoundary', flag)
   }
-  // getAnchorStyle (anchorInfo) {
-  //   const style = super.getAnchorStyle(anchorInfo);
-  //   style.fill = 'transparent';
-  //   style.stroke = 'transparent';
-  //   style.hover.fill = 'transparent';
-  //   style.hover.stroke = 'transparent';
-  //   return style;
-  // }
+  getAnchorStyle (anchorInfo) {
+    const style = super.getAnchorStyle(anchorInfo);
+    style.fill = 'transparent';
+    style.stroke = 'transparent';
+    style.hover.fill = 'transparent';
+    style.hover.stroke = 'transparent';
+    return style;
+  }
   /**
    * 重写定义锚点
    */
@@ -130,15 +88,15 @@ class TeamNodeModel extends RectNodeModel {
   //   return style;
   // }
 }
-class TeamNode extends RectNode {
+class TBDNode extends RectNode {
   paintIcon () {
-    const { width, height, text } = this.props.model;
+    const { width, height, properties } = this.props.model;
     return h('image', {
       width: 35,
       height: 35,
       x: - width / 2 + 3,
       y: - height / 2 + 3,
-      href: getIcon(text.value)
+      href: getIcon(properties.name)
     });
   }
   customMouseDown = (ev) => {
@@ -156,10 +114,31 @@ class TeamNode extends RectNode {
     } = this.props.model;
     console.log('xxx', x, y, width, height)
     const style = this.props.model.getNodeStyle()
+    const score = this.props.model.properties.score || 0;
+    const { result, name } = this.props.model.properties;
+    let scoreTextStyle = '', teamNameTextStyle = '', scoreBack = {};
+    // console.log('result',result)
+    if (result === 'win') {
+      teamNameTextStyle = "fill:#fff;";
+      scoreTextStyle = "fill: #fff;";
+      scoreBack = {
+        fill : 'rgb(66,49,49)',
+        fillOpacity: 0.3,
+      }
+    } else {
+      teamNameTextStyle = 'fill: #9499a0;';
+      scoreTextStyle = 'fill: #9499a0;';
+      scoreBack = {
+        fillOpacity: 0.1,
+      }
+    }
+    teamNameTextStyle += "font-size: 14px;font-family: Helvetica, Arial, sans-serif;text-overflow: ellipsis;letter-spacing: 0;"
+    scoreTextStyle += "font-size: 18px;font-family: Helvetica, Arial, sans-serif;"
+    if(name === 'JDG') console.log('scoreTextStyle',scoreTextStyle)
     return h(
       'g',
       {
-        className: 'lf-team-node',
+        className: 'lf-TBD-node',
         onMouseDown: this.customMouseDown,
       },
       [
@@ -182,20 +161,19 @@ class TeamNode extends RectNode {
             width: 26,
             height: 44,
             fill: '#000',
-            fillOpacity: 0.1,
             stroke: 'none',
-            style: "font-size: 18px;color: var(--text3);font-family: Helvetica, Arial, sans-serif;",
-            // text: {
-            //   x: width / 2 - 18,
-            //   y: 5,
-            //   value: '3'
-            // }
+            ...scoreBack
           }),
-          // h('text', {
-          //   x: width/2-18 ,
-          //   y: 5,
-          //   style: "font-size: 18px;color: var(--text3);font-family: Helvetica, Arial, sans-serif;"
-          // },['3']),
+          h('text', {
+            x: width/2-18 ,
+            y: 5,
+            style: scoreTextStyle
+          }, [score]),
+          h('text', {
+            x: -80 ,
+            y: 5,
+            style: teamNameTextStyle
+          },[name]),
           this.paintIcon(),
           // h('path', {
           //   d: `M ${30 - width / 2} ${1 -height / 2 } l 0 28`,
@@ -211,7 +189,7 @@ class TeamNode extends RectNode {
 
 
 export default {
-  type: 'team-node',
-  model: TeamNodeModel,
-  view: TeamNode
+  type: 'TBD-node',
+  model: TBDNodeModel,
+  view: TBDNode
 }
