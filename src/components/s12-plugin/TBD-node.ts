@@ -57,6 +57,7 @@ class TBDNodeModel extends RectNodeModel {
    */
   setIsCloseToBoundary (flag) {
     this.setProperty('isCloseToBoundary', flag)
+    console.log('触发构建')
   }
   getAnchorStyle (anchorInfo) {
     const style = super.getAnchorStyle(anchorInfo);
