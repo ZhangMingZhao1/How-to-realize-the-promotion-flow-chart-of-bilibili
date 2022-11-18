@@ -111,7 +111,7 @@ const teams = [
 ];
 
 export const teamList = teams.map((team, index) => ({
-  x: 60 + 120 * Math.floor(index / 12),
+  x: 120 * Math.floor(index / 12) - 40,
   y: 30 + (index % 12) * 40,
   type: 'team-node',
   text: team.name,
@@ -123,20 +123,21 @@ export const teamList = teams.map((team, index) => ({
 
 export const groupData = {
   nodes: [
-    { id: 'groupA1_1', type: 'TBD-node', x: 349, y: 135, properties: { result: 'lose', score: 0, name: 'RGE' } },
-    { id: 'groupA1_2', type: 'TBD-node', x: 349, y: 179, properties: { result: 'win', score: 3, name: 'JDG' } },
-    { id: 'groupB1_1', type: 'TBD-node', x: 349, y: 281, properties: { result: 'lose', score: 0, name: 'RNG' } },
-    { id: 'groupB1_2', type: 'TBD-node', x: 349, y: 325, properties: { result: 'win', score: 3, name: 'T1' } },
-    { id: 'groupC1_1', type: 'TBD-node', x: 349, y: 454, properties: { result: 'lose', score: 2, name: 'DK' } },
-    { id: 'groupC1_2', type: 'TBD-node', x: 349, y: 495, properties: { result: 'win', score: 3, name: 'GEN' } },
-    { id: 'groupD1_1', type: 'TBD-node', x: 349, y: 621, properties: { result: 'lose', score: 2, name: 'EDG' } },
-    { id: 'groupD1_2', type: 'TBD-node', x: 349, y: 665, properties: { result: 'win', score: 3, name: 'DRX' } },
-    { id: 'groupA2_1', type: 'TBD-node', x: 758, y: 251, properties: { result: 'win', score: 3, name: 'T1' } },
-    { id: 'groupA2_2', type: 'TBD-node', x: 758, y: 208, properties: { result: 'lose', score: 1, name: 'JDG' } },
-    { id: 'groupA2_3', type: 'TBD-node', x: 758, y: 528, properties: { result: 'lose', score: 1, name: 'GEN' } },
-    { id: 'groupA2_4', type: 'TBD-node', x: 758, y: 571, properties: { result: 'win', score: 3, name: 'DRX' } },
-    { id: 'groupA3_3', type: 'TBD-node', x: 1141, y: 363, properties: { result: 'lose', score: 2, name: 'T1' } },
-    { id: 'groupA3_4', type: 'TBD-node', x: 1141, y: 406, properties: { result: 'win', score: 3, name: 'DRX' } }
+    { id: 'groupA1_1', type: 'TBD-node', x: 349, y: 135, text: "TBD" ,properties: { result: 'lose', score: 0, name: 'RGE' } },
+    { id: 'groupA1_2', type: 'TBD-node', x: 349, y: 179, text: "TBD", properties: { result: 'win', score: 3, name: 'JDG' } },
+    { id: 'groupB1_1', type: 'TBD-node', x: 349, y: 281, text: "TBD", properties: { result: 'lose', score: 0, name: 'RNG' } },
+    { id: 'groupB1_2', type: 'TBD-node', x: 349, y: 325, text: "TBD", properties: { result: 'win', score: 3, name: 'T1' } },
+    { id: 'groupC1_1', type: 'TBD-node', x: 349, y: 454, text: "TBD", properties: { result: 'lose', score: 2, name: 'DK' } },
+    { id: 'groupC1_2', type: 'TBD-node', x: 349, y: 495, text: "TBD", properties: { result: 'win', score: 3, name: 'GEN' } },
+    { id: 'groupD1_1', type: 'TBD-node', x: 349, y: 621, text: "TBD", properties: { result: 'lose', score: 2, name: 'EDG' } },
+    { id: 'groupD1_2', type: 'TBD-node', x: 349, y: 665, text: "TBD", properties: { result: 'win', score: 3, name: 'DRX' } },
+    { id: 'groupA2_1', type: 'TBD-node', x: 758, y: 251, text: "TBD", properties: { result: 'win', score: 3, name: 'T1' } },
+    { id: 'groupA2_2', type: 'TBD-node', x: 758, y: 208, text: "TBD", properties: { result: 'lose', score: 1, name: 'JDG' } },
+    { id: 'groupA2_3', type: 'TBD-node', x: 758, y: 528, text: "TBD", properties: { result: 'lose', score: 1, name: 'GEN' } },
+    { id: 'groupA2_4', type: 'TBD-node', x: 758, y: 571, text: "TBD", properties: { result: 'win', score: 3, name: 'DRX' } },
+    { id: 'groupA3_3', type: 'TBD-node', x: 1141, y: 363,text: "TBD",  properties: { result: 'lose', score: 2, name: 'T1' } },
+    { id: 'groupA3_4', type: 'TBD-node', x: 1141, y: 406, text: "TBD", properties: { result: 'win', score: 3, name: 'DRX' } },
+    ...teamList
   ],
   edges: [
     {

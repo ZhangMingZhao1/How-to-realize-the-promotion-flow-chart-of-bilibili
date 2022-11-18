@@ -12,8 +12,8 @@ class S12Plugin {
     this.lf.register(TeamNode);
     this.lf.register(TBDNode);
     this.lf.register(betterLine);
-    // this.lf.on('node:dnd-drag', debounce(this.checkAppendBoundaryEvent, 10));
-    // this.lf.on('node:dnd-add', this.appendBoundaryEvent);
+    this.lf.on('node:dnd-drag', debounce(this.checkAppendBoundaryEvent, 10));
+    this.lf.on('node:dnd-add', this.appendBoundaryEvent);
 
   }
   private appendBoundaryEvent = ({ data }) => {

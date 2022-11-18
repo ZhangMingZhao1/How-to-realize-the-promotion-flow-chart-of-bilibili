@@ -32,7 +32,7 @@ export default {
       height: 700,
       grid: false,
 
-      // adjustNodePosition: false,
+      adjustNodePosition: false,
       textEdit: false,
       // stopZoomGraph: true,
       // stopScrollGraph: true,
@@ -78,26 +78,24 @@ export default {
       // });
       const len = groupData.nodes.length;
       this.$data.isHide = !this.$data.isHide;
-
-      if (this.$data.isHide === true) {
-        transformModel.translate(-100, 0);
-        for (let i = 14; i < len; i++) {
-          const cur = groupData.nodes[i];
-          // console.log('cur', cur);
-          this.$data.lf.setProperties(cur.id, {
-            isHide: true
-          });
-        }
-      } else if (this.$data.isHide === false) {
-        transformModel.translate(100, 0);
-        for (let i = 14; i < len; i++) {
-          const cur = groupData.nodes[i];
-          // console.log('cur', cur);
-          this.$data.lf.setProperties(cur.id, {
-            isHide: false
-          });
-        }
-      }
+transformModel.translate(100, 0);
+      // if (this.$data.isHide === true) {
+      //   // transformModel.translate(-100, 0);
+      //   for (let i = 14; i < len; i++) {
+      //     const cur = groupData.nodes[i];
+      //     this.$data.lf.setProperties(cur.id, {
+      //       isHide: true
+      //     });
+      //   }
+      // } else if (this.$data.isHide === false) {
+      //   // transformModel.translate(100, 0);
+      //   for (let i = 14; i < len; i++) {
+      //     const cur = groupData.nodes[i];
+      //     this.$data.lf.setProperties(cur.id, {
+      //       isHide: false
+      //     });
+      //   }
+      // }
     }
   },
   components: {}
@@ -108,7 +106,7 @@ export default {
   <div class="flow-chart">
     <div ref="container" class="container"></div>
     <button @click="getData">获取数据</button>
-    <!-- <button @click="hideTeamList">隐藏队伍节点列表</button> -->
+    <button @click="hideTeamList">隐藏队伍节点列表</button>
   </div>
 </template>
 

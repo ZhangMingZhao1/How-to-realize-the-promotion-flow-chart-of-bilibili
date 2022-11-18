@@ -26,13 +26,23 @@ class TBDNodeModel extends RectNodeModel {
    * 重写节点样式
    */
   getNodeStyle() {
+    
     const style = super.getNodeStyle();
-    const { result } = this.properties;
-    if (result === 'win') {
-      style.fill = "#0094ff"
+    const { isCloseToBoundary } = this.properties;
+    let stroke = '#EAEAEC'
+    if (isCloseToBoundary) {
+      style.strokeWidth =2;
+      style.stroke = '#ff7f0e';
     } else {
-      style.fill = "#f1f2f3"
+      style.strokeWidth = 1;
+      style.stroke = stroke;
     }
+    // const { result } = this.properties;
+    // if (result === 'win') {
+    //   style.fill = "#0094ff"
+    // } else {
+      style.fill = "#f1f2f3"
+    // }
     style.stroke = '#EAEAEC'
     style.strokeWidth = 1;
     return style;
@@ -118,19 +128,19 @@ class TBDNode extends RectNode {
     const { result, name } = this.props.model.properties;
     let scoreTextStyle = '', teamNameTextStyle = '', scoreBack = {};
     // console.log('result',result)
-    if (result === 'win') {
-      teamNameTextStyle = "fill:#fff;";
-      scoreTextStyle = "fill: #fff;";
-      scoreBack = {
-        fill : 'rgb(66,49,49)',
-        fillOpacity: 0.3,
-      }
-    } else {
+    // if (result === 'win') {
+    //   teamNameTextStyle = "fill:#fff;";
+    //   scoreTextStyle = "fill: #fff;";
+    //   scoreBack = {
+    //     fill : 'rgb(66,49,49)',
+    //     fillOpacity: 0.3,
+    //   }
+    // } else {
       teamNameTextStyle = 'fill: #9499a0;';
       scoreTextStyle = 'fill: #9499a0;';
       scoreBack = {
         fillOpacity: 0.1,
-      }
+      // }
     }
     teamNameTextStyle += "font-size: 14px;font-family: Helvetica, Arial, sans-serif;text-overflow: ellipsis;letter-spacing: 0;"
     scoreTextStyle += "font-size: 18px;font-family: Helvetica, Arial, sans-serif;"
@@ -164,17 +174,17 @@ class TBDNode extends RectNode {
             stroke: 'none',
             ...scoreBack
           }),
-          h('text', {
-            x: width/2-18 ,
-            y: 5,
-            style: scoreTextStyle
-          }, [score]),
-          h('text', {
-            x: -80 ,
-            y: 5,
-            style: teamNameTextStyle
-          },[name]),
-          this.paintIcon(),
+          // h('text', {
+          //   x: width/2-18 ,
+          //   y: 5,
+          //   style: scoreTextStyle
+          // }, [score]),
+          // h('text', {
+          //   x: -80 ,
+          //   y: 5,
+          //   style: teamNameTextStyle
+          // },[name]),
+          // this.paintIcon(),
           // h('path', {
           //   d: `M ${30 - width / 2} ${1 -height / 2 } l 0 28`,
           //   stroke: '#000',
